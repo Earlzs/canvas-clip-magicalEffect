@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{margin: 0 auto;}
+</style>
+<body>
+    <canvas class="canvas" style="margin:0  500px ; border:1px solid #aaa;"></canvas>
+</body>
+
+
+<script>
+    var searchLight = { x: 450, y: 450, radius: 200, vx: Math.random() * 5 + 10, vy: Math.random() * 5 + 10 }
+    window.onload = function () {
+        var canvas = document.querySelector('canvas');
+        canvas.width = 900;
+        canvas.height = 900;
+
+        var context = canvas.getContext('2d');
+
+        draw(context);
+        setInterval(function () {
+            draw(context);
+            update(canvas.width, canvas.height);
+        }, 40)
+
+    }
+
+
+
+    function draw(context) {
+        var canvas = context.canvas;
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.save();
+        context.beginPath();
+        var gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(Math.random(), `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`);
+        gradient.addColorStop(Math.random(), `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`);
+        gradient.addColorStop(Math.random(), `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`);
+        gradient.addColorStop(Math.random(), `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`);
+        gradient.addColorStop(Math.random(), `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`);
+        gradient.addColorStop(Math.random(), `rgb(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)})`);
+        context.fillStyle = "#000";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        context.beginPath();
+        context.arc(searchLight.x, searchLight.y, searchLight.radius, Math.PI / 180 * 0, Math.PI / 180 * 360);
+        context.fillStyle = "#fff";
+        context.fill();
+        context.clip();
+
+        context.font = 'bold 44px sans-serif';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillStyle = gradient;
+        context.fillText('我就是我！', canvas.width / 2, canvas.height / 2);
+        context.fillText('是颜色不一样的火花！', canvas.width / 5, canvas.height / 3);
+        context.fillText('天空海阔！', canvas.width / 6, canvas.height / 2);
+        context.fillText('做最坚强的泡沫！', canvas.width / 1.1, canvas.height / 5);
+        context.fillText('zs！', canvas.width / 2, canvas.height / 4);
+        context.restore();
+
+    }
+
+    function update(canvasWidth, canvasHeight) {
+        searchLight.x += searchLight.vx;
+        searchLight.y += searchLight.vy;
+        if (searchLight.x - searchLight.radius <= 0) {
+            searchLight.vx = -searchLight.vx;
+            searchLight.x = searchLight.radius;
+        }
+        if (searchLight.x + searchLight.radius > canvasWidth) {
+            searchLight.vx = -searchLight.vx;
+            searchLight.x = canvasWidth - searchLight.radius;
+        }
+        if (searchLight.y - searchLight.radius <= 0) {
+            searchLight.vy = -searchLight.vy;
+            searchLight.y = searchLight.radius;
+        }
+        if (searchLight.y + searchLight.radius > canvasHeight) {
+            searchLight.vy = -searchLight.vy;
+            searchLight.y = canvasHeight - searchLight.radius;
+        }
+    }
+
+</script>
+
+</html>
